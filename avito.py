@@ -17,7 +17,7 @@ def get_html(url):
 
 
 def main():
-    url = ""
+    url = 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok/1-komnatnye-ASgBAQICAkSSA8gQ8AeQUgFAzAgUjlk?f=ASgBAQICA0SSA8gQ8AeQUsDBDbr9NwJAzAgUjlme~A4UAg&user=1'
 
 
 if __name__ == '__main__':
