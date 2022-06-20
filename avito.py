@@ -2,23 +2,23 @@
 # Должен собирать объявления 1-й страницы в бд, потом, через 3 минуты проверяет заново и сверяет с уже имеющимися
 # объявлениями. Если есть новые, добавляет в бд и отправляет в телегу сообщение.
 
-import requests     # Библиотека, делающая запросы по ссылке
-from selectolax.parser import HTMLParser        # Парсер
+import datetime
+from collections import namedtuple
+
+import bs4
+import requests
+
+InnerBlock = namedtuple('Block', 'title, price, currency, date, url')
 
 
-def get_html(url):
-    response = requests.get(url=url)   # Переменная = Получть данные по урлу
-    html = response.text            # Узнать у Кати (м.б. преобразование данных в текст)
-
-    tree = HTMLParser(html)     # создаем дерево для парсера, куда передаем текст запроса
-    items = tree.css('div[data-maker="item"]')
-    for item in items:
-        print(item.css_first('h3').text())
+class Block(InnerBlock):
+    def __str__(self):
+        return f'{self.title}\t{self.price}\t{self.currency}\t{self.date}\t{self.url}'
 
 
-def main():
-    url = 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok/1-komnatnye-ASgBAQICAkSSA8gQ8AeQUgFAzAgUjlk?f=ASgBAQICA0SSA8gQ8AeQUsDBDbr9NwJAzAgUjlme~A4UAg&user=1'
+class AvitoParser:
+    def __init__(self):
+        self.session = requests.Session()
+        self.session.headers = {
 
-
-if __name__ == '__main__':
-    main()
+        }
